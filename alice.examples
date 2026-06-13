@@ -1,0 +1,46 @@
+## llm alice ai
+import openai
+
+YANDEX_CLOUD_FOLDER = "b1gfjkke8fk9pj7fuj41"
+YANDEX_CLOUD_API_KEY = "***…pVnvDs"
+YANDEX_CLOUD_MODEL = "aliceai-llm/latest"
+
+client = openai.OpenAI(
+	api_key=YANDEX_CLOUD_API_KEY,
+	base_url="https://ai.api.cloud.yandex.net/v1",
+	project=YANDEX_CLOUD_FOLDER
+)
+
+response = client.responses.create(
+	model=f"gpt://{YANDEX_CLOUD_FOLDER}/{YANDEX_CLOUD_MODEL}",
+	temperature=0.3,
+	instructions="",
+	input="",
+	max_output_tokens=500
+)
+
+print(response.output_text)
+
+## alice ai art
+import openai
+import base64
+
+YANDEX_CLOUD_FOLDER = "b1gfjkke8fk9pj7fuj41"
+YANDEX_CLOUD_API_KEY = "***…pVnvDs"
+YANDEX_CLOUD_MODEL_ART = "aliceai-image-art-3.0/latest"
+
+client = openai.OpenAI(
+	api_key=YANDEX_CLOUD_API_KEY,
+	base_url="https://ai.api.cloud.yandex.net/v1",
+	project=YANDEX_CLOUD_FOLDER
+)
+
+img = client.images.generate(
+	model=f"art://{YANDEX_CLOUD_FOLDER}/{YANDEX_CLOUD_MODEL_ART}",
+	prompt="Нарисуй кота",
+	size="1024x1024"
+)
+
+image_bytes = base64.b64decode(img.data[0].b64_json)
+with open("image.png", "wb") as f:
+	f.write(image_bytes)
